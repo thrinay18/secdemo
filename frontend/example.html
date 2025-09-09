@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cricket Player Profile & Highlights</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #eee;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 900px;
+    margin: 48px auto;
+    background: #1f1f1f;
+    border-radius: 12px;
+    padding: 32px 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Header section */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .player-photo {
+    width: 120px;
+    height: 120px;
+    background: url('https://via.placeholder.com/120') no-repeat center/cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px #00bcd4;
+    flex-shrink: 0;
+  }
+  .profile-info h1 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    color: #00bcd4;
+  }
+  .profile-info p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #bbb;
+  }
+
+  /* Career highlights */
+  h2 {
+    border-left: 6px solid #00bcd4;
+    padding-left: 12px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    color: #00bcd4;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: #292929;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 16px rgba(0, 188, 212, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 188, 212, 0.6);
+  }
+  .card h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    color: #00bcd4;
+  }
+  .card p {
+    margin: 12px 0 0;
+    color: #ccc;
+    font-size: 1rem;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .profile-info h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+        <div class="player-photo">
+            <img src="virat.jpg" alt="Virat Kohli" />
+          </div>
+          <style>
+            .player-photo {
+              width: 150px;
+              height: 150px;
+              border-radius: 50%;
+              overflow: hidden;
+              box-shadow: 0 4px 10px #00bcd4;
+            }
+            .player-photo img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+          </style>
+      <div class="profile-info">
+        <h1>VIRAT KOHLI</h1>
+        <p>Indian Right Hand Batsman | International Cricket Player | Aggressive Batsman & Best Fielder</p>
+      </div>
+    </header>
+
+    <section class="summary">
+      <h2>Player Profile</h2>
+      <p>
+        Virat Kohli is a dynamic batsman with 12 years of international cricket experience. Known for his explosive batting style, tactical bowling, and exceptional fielding skills, he has been a key player in major international tournaments.
+      </p>
+    </section>
+
+    <section>
+      <h2>Career Highlights</h2>
+      <div class="cards">
+        <article class="card" tabindex="0">
+          <h3>Unbeatable Century vs Australia</h3>
+          <p>Scored a match-winning 145* in the 2019 ODI series at Melbourne Cricket Ground, steering the team to a historic win.</p>
+        </article>
+        <article class="card" tabindex="0">
+          <h3>Most Centueries</h3>
+          <p>Delivered a stunning hat-trick against England in the 2022 T20 World Cup, playing a crucial role in team’s semi-final qualification.</p>
+        </article>
+        <article class="card" tabindex="0">
+          <h3>Fastest IPL Fifty</h3>
+          <p>Blasted the fastest fifty in IPL history, reaching 50 runs in just 16 balls, thrilling fans with his power-hitting.</p>
+        </article>
+        <article class="card" tabindex="0">
+          <h3>Captaincy Success</h3>
+          <p>Led the national side to its first Test series win in South Africa after 20 years, praised for inspiring leadership and strategy.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <footer>© 2025 Vibe Coder</footer>
+</body>
+</html>

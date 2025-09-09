@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virat Kohli - Cricket Legend</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e63946;
+      --secondary: #1d3557;
+      --accent: #f1faee;
+      --bg: #f8f9fa;
+      --card-bg: #fff;
+      --shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), #ff6b6b);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+      box-shadow: var(--shadow);
+    }
+    header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    header p { font-size: 1.2rem; opacity: 0.9; }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    nav a:hover { opacity: 0.7; }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .section-title {
+      font-size: 2rem;
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+    /* About */
+    .about {
+      display: flex;
+      flex-wrap: wrap;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+    .about-img {
+      flex: 1 1 250px;
+      text-align: center;
+    }
+    .about-img img {
+      width: 220px;
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(230,57,70,0.3);
+    }
+    .about-text {
+      flex: 2 1 400px;
+      padding: 1rem 2rem;
+    }
+    .about-text p { font-size: 1.1rem; }
+
+    /* Achievements */
+    .achievements {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .achievement-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .achievement-card:hover { transform: translateY(-5px); }
+    .achievement-card h3 {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Career Stats */
+    .stats {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+    .stats-table th, .stats-table td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .stats-table th {
+      background: var(--primary);
+      color: #fff;
+    }
+    .stats-table tr:hover { background: #f1f1f1; }
+
+    /* Highlights */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .highlight-card {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: var(--card-bg);
+    }
+    .highlight-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .highlight-card div {
+      padding: 1rem;
+    }
+
+    footer {
+      background: var(--secondary);
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media(max-width:768px){
+      .about { flex-direction: column; text-align: center; }
+      .about-text { padding: 1rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Virat Kohli</h1>
+    <p>Indian Cricketer • Run Machine • King Kohli</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#stats">Career Stats</a>
+      <a href="#highlights">Highlights</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- About -->
+    <section id="about" class="about">
+      <div class="about-img">
+        <img src="virat.jpg" alt="Virat Kohli">
+      </div>
+      <div class="about-text">
+        <h2 class="section-title">About Virat Kohli</h2>
+        <p>
+          Virat Kohli, born on 5th November 1988 in Delhi, India, is one of the greatest batsmen in cricket history. 
+          Known as the "Chase Master", he has redefined consistency and aggression in modern-day cricket. 
+          Former captain of the Indian national team, Kohli has numerous records to his name across all formats of the game.
+        </p>
+      </div>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements">
+      <h2 class="section-title">Major Achievements</h2>
+      <div class="achievements">
+        <div class="achievement-card">
+          <h3>Most ODI Centuries</h3>
+          <p>50+ ODI centuries, surpassing Sachin Tendulkar.</p>
+        </div>
+        <div class="achievement-card">
+          <h3>Fastest to 8000, 9000, 10000 ODI runs</h3>
+          <p>Holds multiple batting records in ODIs.</p>
+        </div>
+        <div class="achievement-card">
+          <h3>ICC Awards</h3>
+          <p>ICC Cricketer of the Decade (2010s), multiple Player of the Year awards.</p>
+        </div>
+        <div class="achievement-card">
+          <h3>World Cup Winner</h3>
+          <p>Part of India's 2011 ICC Cricket World Cup winning team.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Career Stats -->
+    <section id="stats" class="stats">
+      <h2 class="section-title">Career Statistics</h2>
+      <table class="stats-table">
+        <tr>
+          <th>Format</th>
+          <th>Matches</th>
+          <th>Runs</th>
+          <th>Average</th>
+          <th>Centuries</th>
+        </tr>
+        <tr>
+          <td>Tests</td>
+          <td>113</td>
+          <td>8848</td>
+          <td>49.15</td>
+          <td>29</td>
+        </tr>
+        <tr>
+          <td>ODIs</td>
+          <td>292</td>
+          <td>13848</td>
+          <td>58.67</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>T20Is</td>
+          <td>115</td>
+          <td>4008</td>
+          <td>52.73</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>IPL</td>
+          <td>237</td>
+          <td>7263</td>
+          <td>37.25</td>
+          <td>7</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Highlights -->
+    <section id="highlights">
+      <h2 class="section-title">Career Highlights</h2>
+      <div class="highlights">
+        <div class="highlight-card">
+          <img src="world.jpg" alt="WC 2011">
+          <div><h3>World Cup 2011</h3><p>Part of India’s historic World Cup winning team.</p></div>
+        </div>
+        <div class="highlight-card">
+          <img src="cap.jpg" alt="Captaincy">
+          <div><h3>Captaincy Era</h3><p>Led India to No.1 Test ranking and multiple overseas wins.</p></div>
+        </div>
+        <div class="highlight-card">
+          <img src="https://i.imgur.com/E9pF8gL.jpg" alt="ODI Records">
+          <div><h3>ODI Records</h3><p>Fastest to reach 8k, 9k, 10k, 11k ODI runs.</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2024 Virat Kohli Fan Page | Designed for Cricket Lovers</p>
+  </footer>
+</body>
+</html>

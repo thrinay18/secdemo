@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B.Tech Student Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #b6e65d;
+      --secondary: #1e293b;
+      --accent: #f1f5f9;
+      --bg: #f8fafc;
+      --card-bg: #fff;
+      --shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), #3b82f6);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+      box-shadow: var(--shadow);
+    }
+    header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    header p { font-size: 1.2rem; opacity: 0.9; }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    nav a:hover { opacity: 0.7; }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .section-title {
+      font-size: 2rem;
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+    /* About */
+    .about {
+      display: flex;
+      flex-wrap: wrap;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+    .about-img {
+      flex: 1 1 250px;
+      text-align: center;
+    }
+    .about-img img {
+      width: 220px;
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.3);
+    }
+    .about-text {
+      flex: 2 1 400px;
+      padding: 1rem 2rem;
+    }
+    .about-text p { font-size: 1.1rem; }
+
+    /* Achievements */
+    .achievements {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .achievement-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .achievement-card:hover { transform: translateY(-5px); }
+    .achievement-card h3 {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Career Stats */
+    .stats {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+    .stats-table th, .stats-table td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .stats-table th {
+      background: var(--primary);
+      color: #fff;
+    }
+    .stats-table tr:hover { background: #f1f1f1; }
+
+    /* Highlights */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .highlight-card {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: var(--card-bg);
+    }
+    .highlight-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .highlight-card div {
+      padding: 1rem;
+    }
+
+    footer {
+      background: var(--secondary);
+      color: #ec2222;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media(max-width:768px){
+      .about { flex-direction: column; text-align: center; }
+      .about-text { padding: 1rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hardik</h1>
+    <p>B.Tech Student • Computer Science • Aspiring Software Engineer</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#stats">Semester Marks</a>
+      <a href="#highlights">Projects</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- About -->
+    <section id="about" class="about">
+      <div class="about-img">
+        <img src="pro.png" alt="Student Profile">
+      </div>
+      <div class="about-text">
+        <h2 class="section-title">About Me</h2>
+        <p>
+          I am Hardik, a final-year B.Tech student specializing in Computer Science & Engineering. 
+          I am passionate about software development, problem-solving, and emerging technologies like AI and Cloud Computing. 
+          My goal is to build innovative solutions that make a real impact.
+        </p>
+      </div>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements">
+      <h2 class="section-title">Achievements & Certificates</h2>
+      <div class="achievements">
+        <div class="achievement-card">
+          <h3>🏆 Coding Competition Winner</h3>
+          <p>1st Place in National Level Coding Hackathon (2023).</p>
+        </div>
+        <div class="achievement-card">
+          <h3>📜 Certified in Python</h3>
+          <p>Completed Python for Everybody by University of Michigan (Coursera).</p>
+        </div>
+        <div class="achievement-card">
+          <h3>🌍 Internship</h3>
+          <p>Summer Internship at Infosys in Web Development.</p>
+        </div>
+        <div class="achievement-card">
+          <h3>💡 Research Paper</h3>
+          <p>Published paper on "AI in Healthcare" in IEEE journal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Semester Marks -->
+    <section id="stats" class="stats">
+      <h2 class="section-title">Semester-wise Marks</h2>
+      <table class="stats-table">
+        <tr>
+          <th>Year</th>
+          <th>Semester</th>
+          <th>Marks (%)</th>
+          <th>Grade</th>
+        </tr>
+        <tr>
+          <td>1st Year</td>
+          <td>Sem 1</td>
+          <td>82%</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>1st Year</td>
+          <td>Sem 2</td>
+          <td>85%</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>2nd Year</td>
+          <td>Sem 3</td>
+          <td>78%</td>
+          <td>B+</td>
+        </tr>
+        <tr>
+          <td>2nd Year</td>
+          <td>Sem 4</td>
+          <td>80%</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>3rd Year</td>
+          <td>Sem 5</td>
+          <td>88%</td>
+          <td>A+</td>
+        </tr>
+        <tr>
+          <td>3rd Year</td>
+          <td>Sem 6</td>
+          <td>90%</td>
+          <td>A+</td>
+        </tr>
+        <tr>
+          <td>4th Year</td>
+          <td>Sem 7</td>
+          <td>86%</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>4th Year</td>
+          <td>Sem 8</td>
+          <td>91%</td>
+          <td>A+</td>
+        </tr>
+      </table>
+    </section>
+<!-- Projects -->
+<section id="highlights">
+  <h2 class="section-title">Key Projects</h2>
+  <div class="highlights">
+    <div class="highlight-card">
+      <img src="ai.jpg" alt="AI Chatbot Project">
+      <div>
+        <h3>AI Chatbot</h3>
+        <p>Built an AI-powered chatbot using Python & NLP for student queries.</p>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <img src="ecom.jpg" alt="E-Commerce Website Project">
+      <div>
+        <h3>E-Commerce Website</h3>
+        <p>Developed a full-stack e-commerce platform with React & Node.js.</p>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <img src="cloud.jpg" alt="Cloud Deployment Project">
+      <div>
+        <h3>Cloud Deployment</h3>
+        <p>Deployed scalable web apps on AWS and Azure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <footer>
+    <p>© 2025 Hardik | Designed for Student Portfolio</p>
+  </footer>
+</body>
+</html>
