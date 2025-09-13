@@ -1,7 +1,371 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Mini Battle Royale — Phaser 3 (single file)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { margin:0; background:#111; color:#eee; font-family: Arial, sans-serif; }
+    #gameContainer { width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; }
+    #overlay { position: absolute; top: 10px; left: 10px; z-index: 10; color: #fff; }
+    button { padding:8px 12px; border:none; background:#1a73e8; color:white; border-radius:6px; cursor:pointer; }
+  </style>
+</head>
 <body>
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+  <div id="gameContainer"></div>
+  <div id="overlay">
+    <div style="margin-bottom:8px"><strong>Mini Battle Royale</strong> — WASD to move, mouse to aim, click to shoot</div>
+    <div><button id="restartBtn">Restart</button></div>
+  </div>
+
+  <!-- Phaser 3 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+
+  <script>
+  // Phaser game config
+  const config = {
+    type: Phaser.AUTO,
+    parent: 'gameContainer',
+    width: 960,
+    height: 640,
+    backgroundColor: '#2b2b2b',
+    physics: {
+      default: 'arcade',
+      arcade: { debug: false }
+    },
+    scene: { preload, create, update }
+  };
+
+  const game = new Phaser.Game(config);
+
+  // Game constants
+  const MAP_WIDTH = 2400;
+  const MAP_HEIGHT = 1600;
+  const ENEMY_SPAWN_INTERVAL = 3000; // ms
+  const SAFEZONE_SHRINK_START = 15000; // ms before shrinking begins
+  const SAFEZONE_SHRINK_DURATION = 90000; // ms over which it shrinks to small circle
+  const MAX_ENEMIES = 20;
+
+  let player, cursors, pointer, bullets, enemies, pickups;
+  let lastFired = 0;
+  let lastEnemySpawn = 0;
+  let safeZone = { x: MAP_WIDTH/2, y: MAP_HEIGHT/2, radius: 900 }; // starting big
+  let gameStartTime = 0;
+  let hudText, statusText;
+  let isGameOver = false;
+
+  function preload() {
+    // We will use simple graphics (no external assets). But create tiny textures.
+    this.textures.generate('player', { data: ['.22','.22'], pixelWidth: 8, pixelHeight: 8 });
+    this.textures.generate('enemy',  { data: ['333','333'], pixelWidth: 8, pixelHeight: 8 });
+    this.textures.generate('bullet', { data: ['1'], pixelWidth: 6, pixelHeight: 6 });
+    this.textures.generate('pickup', { data: ['9'], pixelWidth: 10, pixelHeight: 10 });
+
+    // simple circle for safe zone overlay
+    this.textures.generateCanvas('circle', { width: 512, height: 512 }, (canvas) => {
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'rgba(255,255,255,0.02)';
+      ctx.beginPath();
+      ctx.arc(256,256,250,0,Math.PI*2);
+      ctx.fill();
+    });
+  }
+
+  function create() {
+    // Create world bounds (bigger than view)
+    this.cameras.main.setBounds(0, 0, MAP_WIDTH, MAP_HEIGHT);
+    this.physics.world.setBounds(0, 0, MAP_WIDTH, MAP_HEIGHT);
+
+    // Create a tiled background via graphics
+    const bg = this.add.tileSprite(0,0, MAP_WIDTH, MAP_HEIGHT, null).setOrigin(0).setFillStyle(0x2f3b3f, 1);
+
+    // Groups
+    bullets = this.physics.add.group({ classType: Phaser.Physics.Arcade.Image, runChildUpdate: true });
+    enemies = this.physics.add.group({ classType: Phaser.Physics.Arcade.Image, runChildUpdate: true });
+    pickups = this.physics.add.group({ classType: Phaser.Physics.Arcade.Image, runChildUpdate: true });
+
+    // Player
+    player = this.physics.add.sprite(MAP_WIDTH/2, MAP_HEIGHT/2, 'player');
+    player.setDisplaySize(28,28);
+    player.setCollideWorldBounds(true);
+    player.hp = 100;
+    player.speed = 220;
+    player.ammo = 40;
+
+    // Camera follows player
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setZoom(1.0);
+
+    // Pointer and controls
+    cursors = this.input.keyboard.addKeys({ up:'W', down:'S', left:'A', right:'D' });
+    pointer = this.input.activePointer;
+
+    // Shooting
+    this.input.on('pointerdown', () => {
+      if (isGameOver) return;
+      shoot(this, pointer);
+    });
+
+    // Collisions
+    this.physics.add.overlap(bullets, enemies, onBulletHitEnemy, null, this);
+    this.physics.add.overlap(player, enemies, onEnemyHitPlayer, null, this);
+    this.physics.add.overlap(player, pickups, onPickup, null, this);
+
+    // HUD
+    hudText = this.add.text(10, 10, '', { font: '16px Arial', fill: '#ffffff' }).setScrollFactor(0);
+    statusText = this.add.text(config.width/2, 50, '', { font: '28px Arial', fill: '#ffdddd' }).setScrollFactor(0).setOrigin(0.5);
+
+    // Safe zone graphic (a transparent circle)
+    this.safeZoneGraphics = this.add.graphics().setScrollFactor(0);
+    this.safeZoneWorld = this.add.graphics(); // world-space indicator (semi-transparent)
+    this.safeZoneWorld.setDepth(-1);
+
+    // Spawning initial pickups
+    spawnPickup(this, MAP_WIDTH/2 + 120, MAP_HEIGHT/2);
+    spawnPickup(this, MAP_WIDTH/2 - 200, MAP_HEIGHT/2 - 100);
+
+    // Timers
+    lastEnemySpawn = 0;
+    gameStartTime = this.time.now;
+    isGameOver = false;
+
+    // Input key to drop a quick pickup for testing (H)
+    this.input.keyboard.on('keydown-H', () => {
+      spawnPickup(this, player.x + Phaser.Math.Between(-80,80), player.y + Phaser.Math.Between(-80,80));
+    });
+
+    // Restart button
+    document.getElementById('restartBtn').onclick = () => { this.scene.restart(); };
+
+    // World border visual (simple grid)
+    drawGrid(this);
+  }
+
+  function update(time, delta) {
+    if (isGameOver) return;
+
+    // Player movement
+    const moveX = (cursors.left.isDown ? -1 : 0) + (cursors.right.isDown ? 1 : 0);
+    const moveY = (cursors.up.isDown ? -1 : 0) + (cursors.down.isDown ? 1 : 0);
+    const speed = player.speed * (sceneHasSlowEffect(player) ? 0.6 : 1);
+    player.setVelocity(moveX * speed, moveY * speed);
+    if (moveX === 0 && moveY === 0) player.setVelocity(0,0);
+
+    // Rotate player toward pointer
+    const worldPoint = this.input.activePointer.positionToCamera(this.cameras.main);
+    const angle = Phaser.Math.Angle.Between(player.x, player.y, worldPoint.x, worldPoint.y);
+    player.rotation = angle;
+
+    // Spawn enemies over time (but limited)
+    if (time - lastEnemySpawn > ENEMY_SPAWN_INTERVAL && enemies.getLength() < MAX_ENEMIES) {
+      spawnEnemy(this);
+      lastEnemySpawn = time;
+    }
+
+    // Enemies AI: simple chase
+    enemies.children.iterate((e) => {
+      if (!e || !e.active) return;
+      const speed = 70 + Phaser.Math.Between(0,60);
+      this.physics.moveToObject(e, player, speed);
+      // slight rotation
+      e.rotation = Phaser.Math.Angle.Between(e.x, e.y, player.x, player.y);
+    });
+
+    // Bullets cleanup
+    bullets.children.iterate((b) => {
+      if (!b || !b.active) return;
+      if (b.x < 0 || b.x > MAP_WIDTH || b.y < 0 || b.y > MAP_HEIGHT) b.destroy();
+    });
+
+    // Safe zone update (shrinking)
+    updateSafeZone(this);
+
+    // Apply damage if player outside safe zone
+    const distFromCenter = Phaser.Math.Distance.Between(player.x, player.y, safeZone.x, safeZone.y);
+    if (distFromCenter > safeZone.radius) {
+      applyPlayerDamage(0.03 * delta); // damage per ms
+    }
+
+    // HUD update
+    const secondsElapsed = Math.floor((time - gameStartTime) / 1000);
+    hudText.setText(`HP: ${Math.max(0, Math.round(player.hp))}   Ammo: ${player.ammo}   Enemies: ${enemies.getLength()}   Time: ${secondsElapsed}s`);
+
+    // Check win/lose
+    if (player.hp <= 0) endGame(this, false);
+    if (enemies.getLength() === 0 && this.time.now - gameStartTime > 4000) {
+      // optional win condition: survive until enemies cleared and safe zone small
+      if (safeZone.radius <= 120) endGame(this, true);
+    }
+  }
+
+  // ---------- Helpers ----------
+
+  function shoot(scene, pointer) {
+    if (player.ammo <= 0) return;
+    const now = scene.time.now;
+    if (now - lastFired < 120) return; // fire rate
+    lastFired = now;
+    player.ammo--;
+
+    const bullet = scene.physics.add.image(player.x, player.y, 'bullet').setDepth(2);
+    bullet.setDisplaySize(8,8);
+    const worldPoint = pointer.positionToCamera(scene.cameras.main);
+    const angle = Phaser.Math.Angle.Between(player.x, player.y, worldPoint.x, worldPoint.y);
+    const speed = 900;
+    bullet.rotation = angle;
+    scene.physics.velocityFromRotation(angle, speed, bullet.body.velocity);
+    bullet.damage = 34;
+    bullets.add(bullet);
+
+    // slight bullet lifetime
+    scene.time.delayedCall(2000, () => { if (bullet && bullet.active) bullet.destroy(); });
+  }
+
+  function spawnEnemy(scene) {
+    const spawnPadding = 150;
+    // spawn at random edge but outside safe zone ideally
+    let x = Phaser.Math.Between(spawnPadding, MAP_WIDTH - spawnPadding);
+    let y = Phaser.Math.Between(spawnPadding, MAP_HEIGHT - spawnPadding);
+    const side = Phaser.Math.Between(0,3);
+    if (side === 0) x = spawnPadding; // left
+    else if (side === 1) x = MAP_WIDTH - spawnPadding;
+    else if (side === 2) y = spawnPadding;
+    else y = MAP_HEIGHT - spawnPadding;
+
+    const e = scene.physics.add.sprite(x, y, 'enemy');
+    e.setDisplaySize(26,26);
+    e.hp = 60 + Phaser.Math.Between(0,60);
+    e.setCollideWorldBounds(true);
+    enemies.add(e);
+
+    // occasional shout: spawn a pickup nearby when enemy dies (handled later)
+  }
+
+  function onBulletHitEnemy(bullet, enemy) {
+    if (!bullet.active || !enemy.active) return;
+    enemy.hp -= bullet.damage;
+    bullet.destroy();
+
+    if (enemy.hp <= 0) {
+      // spawn small pickup with some chance
+      if (Phaser.Math.Between(0,100) < 30) {
+        spawnPickup(this, enemy.x + Phaser.Math.Between(-20,20), enemy.y + Phaser.Math.Between(-20,20));
+      }
+      enemy.destroy();
+    }
+  }
+
+  function onEnemyHitPlayer(playerObj, enemy) {
+    // contact damage + knockback
+    const damage = 12 + Phaser.Math.Between(0,8);
+    applyPlayerDamage(damage);
+    // knockback
+    const force = 180;
+    const angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, playerObj.x, playerObj.y);
+    playerObj.setVelocity(Math.cos(angle) * force, Math.sin(angle) * force);
+    // slight enemy recoil
+    enemy.setVelocity(-Math.cos(angle) * 80, -Math.sin(angle) * 80);
+  }
+
+  function spawnPickup(scene, x, y) {
+    const p = scene.physics.add.sprite(x, y, 'pickup');
+    p.setDisplaySize(14,14);
+    p.type = Phaser.Math.Between(0,1) === 0 ? 'heal' : 'ammo';
+    p.setTint(p.type === 'heal' ? 0x33ee88 : 0xeeee33);
+    pickups.add(p);
+
+    // pickup lifetime
+    scene.time.delayedCall(25000, () => { if (p && p.active) p.destroy(); });
+  }
+
+  function onPickup(playerObj, p) {
+    if (!p.active) return;
+    if (p.type === 'heal') {
+      player.hp = Math.min(100, player.hp + 30);
+    } else {
+      player.ammo += 20;
+    }
+    p.destroy();
+  }
+
+  function applyPlayerDamage(amount) {
+    player.hp -= amount;
+    if (player.hp < 0) player.hp = 0;
+  }
+
+  function endGame(scene, won) {
+    isGameOver = true;
+    statusText.setText(won ? 'YOU WIN!' : 'YOU DIED');
+    statusText.setStyle({ fill: won ? '#88ff88' : '#ff8888' });
+    // stop all motion
+    scene.physics.pause();
+  }
+
+  function drawGrid(scene) {
+    const g = scene.add.graphics();
+    g.lineStyle(1, 0x222222, 1);
+    const step = 160;
+    for (let x = 0; x < MAP_WIDTH; x += step) {
+      g.lineBetween(x, 0, x, MAP_HEIGHT);
+    }
+    for (let y = 0; y < MAP_HEIGHT; y += step) {
+      g.lineBetween(0, y, MAP_WIDTH, y);
+    }
+    g.setDepth(-2);
+  }
+
+  function updateSafeZone(scene) {
+    const elapsed = scene.time.now - gameStartTime;
+
+    // If before shrink start: safeRadius unchanged, maybe pulse slightly
+    if (elapsed < SAFEZONE_SHRINK_START) {
+      // do nothing
+    } else {
+      // shrink progress: from initial radius to final small radius (say 100)
+      const t = Phaser.Math.Clamp((elapsed - SAFEZONE_SHRINK_START) / SAFEZONE_SHRINK_DURATION, 0, 1);
+      const startR = 900;
+      const endR = 100;
+      safeZone.radius = Phaser.Math.Interpolation.Linear([startR, endR], t);
+      // also slowly move safe zone center randomly to keep player on their toes
+      safeZone.x += Phaser.Math.Between(-10,10) * 0.02;
+      safeZone.y += Phaser.Math.Between(-10,10) * 0.02;
+    }
+
+    // Draw safe zone overlay in world coords
+    scene.safeZoneWorld.clear();
+    scene.safeZoneWorld.fillStyle(0x000000, 0.6);
+    // we draw a big dark rect, then cut a transparent circle representing safe area
+    // but arcade doesn't support subtraction easily — instead draw translucent overlay and circle outline
+    const g = scene.safeZoneWorld;
+    g.fillStyle(0x000000, 0.4);
+    g.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
+    g.fillStyle(0x88ccff, 0.06);
+    g.fillCircle(safeZone.x, safeZone.y, safeZone.radius);
+    g.lineStyle(2, 0x88ccff, 0.5);
+    g.strokeCircle(safeZone.x, safeZone.y, safeZone.radius);
+
+    // HUD safe zone indicator (screen-space)
+    const cam = scene.cameras.main;
+    const screenX = (safeZone.x - cam.worldView.x) * (cam.zoom);
+    const screenY = (safeZone.y - cam.worldView.y) * (cam.zoom);
+    const screenR = safeZone.radius * cam.zoom;
+
+    scene.safeZoneGraphics.clear();
+    scene.safeZoneGraphics.lineStyle(2, 0x88ccff, 0.9);
+    // don't draw giant circles off-screen; check reasonable bounds
+    if (screenX + screenR > -200 && screenX - screenR < config.width + 200 && screenY + screenR > -200 && screenY - screenR < config.height + 200) {
+      scene.safeZoneGraphics.strokeCircle(screenX, screenY, screenR);
+      scene.safeZoneGraphics.setAlpha(0.25);
+      scene.safeZoneGraphics.fillStyle(0x88ccff, 0.02);
+      scene.safeZoneGraphics.fillCircle(screenX, screenY, screenR);
+    }
+  }
+
+  function sceneHasSlowEffect(player) {
+    // placeholder for future environmental slow (e.g., swamp)
+    return false;
+  }
+
+  </script>
 </body>
 </html>

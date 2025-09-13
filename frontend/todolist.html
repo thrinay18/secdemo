@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stylish jQuery To-Do List</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Add new item with text from input
+    $("#addItem").click(() => {
+      const text = $("#inputField").val().trim();
+      if (text !== "") {
+        const newItem = $(
+          `<li><span>${text}</span><button class='deleteBtn'>❌</button></li>`
+        );
+        $("#itemList").append(newItem);
+        $("#inputField").val(""); // clear input
+      }
+    });
+
+    // Delete selected item
+    $(document).on("click", ".deleteBtn", function() {
+      $(this).parent().fadeOut(300, function() {
+        $(this).remove();
+      });
+    });
+
+    // Live input text display
+    $("#inputField").on("input", () => {
+      $("#textOutput").text($("#inputField").val());
+    });
+
+    // Main button effects
+    $("#mainBtn").click(() => {
+      $("h1").text("Clicked!");
+      $(".box").css("background", "#ffb6c1");
+    });
+    $("#mainBtn").dblclick(() => {
+      $("h1").text("Double clicked!");
+      $(".box").css("background", "#87cefa");
+    });
+    $("#mainBtn").hover(() => {
+      $("h1").text("Hovered!");
+      $(".box").css("background", "#ff6b6b");
+    });
+  });
+</script>
+
+<style>
+  /* Page design */
+  body { 
+    font-family: "Segoe UI", Arial, sans-serif; 
+    padding: 40px; 
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    color: #333;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 500px;
+    width: 100%;
+    background: #ffffffd9;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+  }
+
+  h1 { 
+    text-align: center; 
+    color: #2b2d42; 
+    margin-bottom: 20px; 
+    font-size: 28px;
+  }
+
+  .box { 
+    background: #1d3557; 
+    color: white; 
+    padding: 15px; 
+    border-radius: 12px; 
+    margin: 20px 0;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+    text-align: center;
+    font-size: 15px;
+  }
+
+  /* Buttons */
+  button { 
+    padding: 10px 16px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  #mainBtn { background: #457b9d; color: white; width: 100%; margin-bottom: 15px; }
+  #mainBtn:hover { background: #1d3557; }
+
+  #addItem { background: #2a9d8f; color: white; margin-top: 10px; }
+  #addItem:hover { background: #21867a; }
+
+  .deleteBtn { 
+    background: #e63946; 
+    color: white; 
+    margin-left: 10px; 
+    font-size: 13px; 
+    padding: 6px 10px;
+  }
+  .deleteBtn:hover { background: #a4161a; }
+
+  /* Input field */
+  input { 
+    padding: 10px; 
+    width: calc(100% - 24px); 
+    border: 2px solid #457b9d; 
+    border-radius: 8px; 
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+  input:focus {
+    border-color: #1d3557;
+    box-shadow: 0 0 6px #1d3557;
+  }
+
+  #textOutput { 
+    margin-top: 8px; 
+    font-weight: bold; 
+    color: #1d3557;
+    text-align: center;
+  }
+
+  /* To-do list styling */
+  ul { 
+    list-style: none; 
+    padding: 0; 
+    margin-top: 15px; 
+  }
+
+  li { 
+    background: #f8f9fa; 
+    margin: 8px 0; 
+    padding: 12px 15px; 
+    border-radius: 10px; 
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    transition: 0.3s;
+    font-size: 15px;
+  }
+
+  li:hover { background: #edf2f4; }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <h1>✨ Stylish To-Do List ✨</h1>
+
+  <button id="mainBtn">Click me</button>
+  <div class="box"><p>Interactive jQuery Box</p></div>
+
+  <input id="inputField" type="text" placeholder="Type your task..." />
+  <p id="textOutput">Initial text</p>
+
+  <h2>My Tasks</h2>
+  <ul id="itemList">
+    <li><span>Item 1</span><button class="deleteBtn">❌</button></li>
+  </ul>
+
+  <button id="addItem">➕ Add Item</button>
+</div>
+
+</body>
+</html>
