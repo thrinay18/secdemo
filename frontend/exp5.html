@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      width: 750px;
+    }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #74b9ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #2c3e50;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+      align-self: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select,
+    textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border 0.3s;
+      width: 100%;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border: 1px solid #74b9ff;
+    }
+
+    .gender-options,
+    .hobbies-options {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      grid-column: span 2;
+      padding: 12px;
+      background: #74b9ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #0984e3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+      }
+      form {
+        grid-template-columns: 1fr;
+      }
+      .btn {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Profile Section -->
+    <div class="profile-section">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student Profile" class="profile-pic">
+      <h2 class="form-title">Student Registration Form</h2>
+    </div>
+
+    <!-- Form Section -->
+    <form>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter full name">
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob">
+
+      <label for="father">Father's Name</label>
+      <input type="text" id="father" name="father" placeholder="Enter father's name">
+
+      <label for="mother">Mother's Name</label>
+      <input type="text" id="mother" name="mother" placeholder="Enter mother's name">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter email">
+
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" placeholder="Enter city">
+
+      <label for="course">Course</label>
+      <select id="course" name="course">
+        <option value="">Select Course</option>
+        <option value="btech">B.Tech</option>
+        <option value="bsc">B.Sc</option>
+        <option value="bcom">B.Com</option>
+      </select>
+
+      <label>Gender</label>
+      <div class="gender-options">
+        <label><input type="radio" name="gender" value="male"> Male</label>
+        <label><input type="radio" name="gender" value="female"> Female</label>
+        <label><input type="radio" name="gender" value="other"> Other</label>
+      </div>
+
+      <label>Hobbies</label>
+      <div class="hobbies-options">
+        <label><input type="checkbox" name="hobbies" value="reading"> Reading</label>
+        <label><input type="checkbox" name="hobbies" value="sports"> Sports</label>
+        <label><input type="checkbox" name="hobbies" value="music"> Music</label>
+        <label><input type="checkbox" name="hobbies" value="coding"> Coding</label>
+      </div>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter password">
+
+      <label for="cpassword">Confirm Password</label>
+      <input type="password" id="cpassword" name="cpassword" placeholder="Confirm password">
+
+      <label for="skills">Technical Skills</label>
+      <textarea id="skills" name="skills" placeholder="List your technical skills"></textarea>
+
+      <label for="projects">Projects</label>
+      <textarea id="projects" name="projects" placeholder="Enter details of projects"></textarea>
+
+      <label for="certificates">Certificates</label>
+      <textarea id="certificates" name="certificates" placeholder="Enter certifications"></textarea>
+
+      <label for="strengths">Strengths</label>
+      <textarea id="strengths" name="strengths" placeholder="List your strengths"></textarea>
+
+      <label for="weaknesses">Weaknesses</label>
+      <textarea id="weaknesses" name="weaknesses" placeholder="List your weaknesses"></textarea>
+
+      <button type="submit" class="btn">Register</button>
+    </form>
+  </div>
+</body>
+</html>

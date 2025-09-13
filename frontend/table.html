@@ -2,127 +2,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All HTML Tags Example</title>
-    <meta name="viewport" content="widtvv vh=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICC Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; }
-    </style>
-    <script>
-        function showAlert() {
-            alert('Hello from script!');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
         }
-    </script>
+        body {
+            background: #f4f4f4;
+        }
+        header {
+            background: #003366;
+            color: white;
+            padding: 10px 20px;
+        }
+        header .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        nav {
+            display: inline-block;
+            float: right;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .banner {
+            background: url('https://images.unsplash.com/photo-1600267161161-d1734793e499?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3JpY2tldHxlbnwwfHx8fDE2OTU0NTY0MDc&ixlib=rb-4.0.3&q=80&w=1080') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 6px #000;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        .section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #003366;
+        }
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .card h3 {
+            margin: 15px 0 10px 0;
+            color: #003366;
+        }
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        @media(max-width:768px){
+            nav {
+                float: none;
+                text-align: center;
+                margin-top: 10px;
+            }
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <header>
-        <h1>Main Heading</h1>
+        <div class="logo">ICC</div>
         <nav>
-            <ul>
-                <li><a href="#section1">Section 1</a></li>
-                <li><a href="#section2">Section 2</a></li>
-            </ul>
+            <a href="#">Home</a>
+            <a href="#">News</a>
+            <a href="#">Rankings</a>
+            <a href="#">Fixtures</a>
+            <a href="#">Teams</a>
+            <a href="#">About</a>
         </nav>
     </header>
-    <main>
-        <section id="section1">
-            <h2>Section 1</h2>
-            <article>
-                <h3>Article Title</h3>
-                <p>This is a <strong>paragraph</strong> with <em>emphasis</em> and <mark>highlight</mark>.</p>
-                <blockquote cite="https://example.com">This is a blockquote.</blockquote>
-                <pre>
-function hello() {
-    console.log("Hello World");
-}
-                </pre>
-                <code>console.log('Inline code');</code>
-                <br>
-                <hr>
-                <ul>
-                    <li>Unordered list item</li>
-                </ul>
-                <ol>
-                    <li>Ordered list item</li>
-                </ol>
-                <dl>
-                    <dt>Term</dt>
-                    <dd>Definition</dd>
-                </dl>
-                <figure>
-                    <img src="https://via.placeholder.com/150&quot; alt="Placeholder Image">
-                    <figcaption>Sample Image</figcaption>
-                </figure>
-                <table border="1">
-                    <caption>Sample Table</caption>
-                    <thead>
-                        <tr>
-                            <th>Header 1</th>
-                            <th>Header 2</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2">Footer</td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <form>
-                    <fieldset>
-                        <legend>Form Example</legend>
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name">
-                        <input type="checkbox" id="subscribe" name="subscribe">
-                        <label for="subscribe">Subscribe</label>
-                        <input type="radio" id="male" name="gender" value="male">
-                        <label for="male">Male</label>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">Female</label>
-                        <select name="country">
-                            <option value="us">USA</option>
-                            <option value="uk">UK</option>
-                        </select>
-                        <textarea name="comments"></textarea>
-                        <button type="button" onclick="showAlert()">Click Me</button>
-                        <input type="submit" value="Submit">
-                    </fieldset>
-                </form>
-                <details>
-                    <summary>More Info</summary>
-                    <p>Hidden details shown here.</p>
-                </details>
-                <progress value="50" max="100"></progress>
-                <meter value="0.6">60%</meter>
-                <time datetime="2024-06-01">June 1, 2024</time>
-                <abbr title="HyperText Markup Language">HTML</abbr>
-                <address>
-                    123 Main St, City, Country
-                </address>
-                <bdo dir="rtl">Right to left text</bdo>
-                <sup>Superscript</sup>
-                <sub>Subscript</sub>
-                <small>Small text</small>
-                <s>Strikethrough</s>
-                <u>Underlined</u>
-                <i>Italic</i>
-                <b>Bold</b>
-                <span>Span text</span>
-            </article>
-        </section>
-        <section id="section2">
-            <h2>Section 2</h2>
-            <aside>
-                <p>This is an aside.</p>
-            </aside>
-        </section>
-    </main>
+
+    <div class="banner">
+        International Cricket Council
+    </div>
+
+    <div class="section">
+        <h2>Latest News</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1597756489463-66a42b4ec4f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="News 1">
+                <h3>ICC World Cup Updates</h3>
+                <p>Latest updates and match highlights from the ICC World Cup tournaments and events.</p>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1607758869820-908c0a9c12f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="News 2">
+                <h3>Player Rankings</h3>
+                <p>Check out the latest player rankings for Test, ODI, and T20 cricket formats.</p>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1579880738104-2f8584e2aefd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="News 3">
+                <h3>Upcoming Fixtures</h3>
+                <p>Explore the upcoming cricket fixtures and schedules for all international matches.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Top Teams</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1618479072812-11b7da5b7f72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Team 1">
+                <h3>India</h3>
+                <p>One of the strongest cricket teams with world-class players and multiple titles.</p>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1604908177527-45e2714da011?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Team 2">
+                <h3>Australia</h3>
+                <p>Consistently performing cricket team with many historic victories in ICC tournaments.</p>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1617808451217-3785da6a1244?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Team 3">
+                <h3>England</h3>
+                <p>Known for competitive cricket and top-notch international performances.</p>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2024 Example Footer</p>
+        &copy; 2025 ICC - International Cricket Council. All rights reserved.
     </footer>
+
 </body>
 </html>

@@ -1,0 +1,23 @@
+(function () {
+  var inputJson = '[{"tag":"v-irctc-co-in","traffic_share":34,"parent_div":"v-irctc-co-in"},{"tag":"v-irctc-co-in-v5","traffic_share":33,"parent_div":"v-irctc-co-in-v5"},{"tag":"v-irctc-co-in-v6","traffic_share":33,"parent_div":"v-irctc-co-in-v6"}]';
+  var masterTag = "v-irctc-co-in";
+  var masterParentId = "v-irctc-co-in";
+  var tagData = JSON.parse(inputJson);
+  var masterParentDiv = document.querySelector(`div[id^=${masterParentId}]`);
+  var randomChance = Math.random() * 100;
+  var cumulativeVal = 0;
+  var ai = document.createElement("script");
+  ai.defer = true;
+  ai.async = true;
+  var selectedTag = tagData.find((item)=>{
+    cumulativeVal += item.traffic_share;
+    return randomChance < cumulativeVal;
+  });
+
+  var tagUrl = '//a.vdo.ai/core/v-irctc-co-in/vdo.ai.js?vdo=';
+  if(masterParentDiv && selectedTag.tag != masterTag) masterParentDiv.id = selectedTag.parent_div;
+
+  var scriptUrl = selectedTag.tag == masterTag ? "//a.vdo.ai/core/v-irctc-co-in/custom.js?vdo=" : tagUrl.replace(masterTag, selectedTag.tag);
+  ai.src = window.location.protocol + scriptUrl;
+  document.head.appendChild(ai);
+})();

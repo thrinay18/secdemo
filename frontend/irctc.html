@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRCTC Clone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    /* Header */
+    header {
+      background: #003366;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 50px;
+      margin-right: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Scrolling Announcement */
+    .announcement {
+      width: 100%;
+      overflow: hidden;
+      background: #ff6600;
+      color: white;
+      font-weight: bold;
+    }
+    .announcement p {
+      display: inline-block;
+      white-space: nowrap;
+      padding-left: 100%;
+      animation: scrollText 15s linear infinite;
+      margin: 0;
+      padding: 10px 0;
+    }
+    @keyframes scrollText {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Banner */
+    .banner {
+      position: relative;
+      height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+    .banner-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1; /* pushes the image behind */
+    }
+    .banner h1 {
+      font-size: 40px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    /* Booking Form */
+    .booking-box {
+      background: white;
+      width: 80%;
+      max-width: 850px;
+      margin: -70px auto 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .booking-box h2 {
+      margin-bottom: 15px;
+      color: #003366;
+      text-align: center;
+    }
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+    input:focus, select:focus {
+      border: 1px solid #003366;
+      outline: none;
+      box-shadow: 0 0 4px rgba(0, 51, 102, 0.5);
+    }
+    .options {
+      grid-column: span 2;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .options label {
+      background: #f9f9f9;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .btns {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+    }
+    .btns button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .search-btn {
+      background: #ff6600;
+      color: white;
+    }
+    .search-btn:hover {
+      background: #e65c00;
+    }
+    .easy-btn {
+      background: #003366;
+      color: white;
+    }
+    .easy-btn:hover {
+      background: #002244;
+    }
+
+    /* Footer */
+    footer {
+      background: #003366;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.jpg" alt="IRCTC Logo">
+      <h2>IRCTC</h2>
+    </div>
+    <nav>
+      <a href="#">Login</a>
+      <a href="#">Register</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Help</a>
+    </nav>
+  </header>
+
+  <!-- Scrolling Announcement -->
+  <div class="announcement">
+    <p>Yatrigan kripya dhyan dijiye,Gaadi sankhya 12497 Nayi Dilli se chalkar Ludhiana ke raste Amritsar ko jaane wali Shan-E-Punjab Express kuch hi der me pletform number 14 se chalne wali hai..
+        May I have your attention please,Train no. 12497 from new delhi via ludhiana to amritsar Shan-E-Punjab express is about to depart from platform number 14,thank you..
+        P.S. NDLS.</p>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <img src="india.jpg" alt="Train Banner" class="banner-img">
+    <h1>INDIAN RAILWAYS <br> Safety • Security • Punctuality</h1>
+  </div>
+
+  <!-- Booking Box -->
+  <div class="booking-box">
+    <div style="display:flex; justify-content:center; gap:20px; margin-bottom:15px;">
+      <button style="padding:10px 20px; background:#003366; color:white; border:none; border-radius:5px;">PNR Status</button>
+      <button style="padding:10px 20px; background:#003366; color:white; border:none; border-radius:5px;">Charts / Vacancy</button>
+    </div>
+    <h2>Book Ticket</h2>
+    <form>
+      <div>
+        <label for="from">From</label>
+        <input type="text" id="from" placeholder="Enter station">
+      </div>
+      <div>
+        <label for="to">To</label>
+        <input type="text" id="to" placeholder="Enter station">
+      </div>
+      <div>
+        <label for="date">Journey Date</label>
+        <input type="date" id="date">
+      </div>
+      <div>
+        <label for="class">Class</label>
+        <select id="class">
+          <option>All Classes</option>
+          <option>Sleeper</option>
+          <option>AC 3 Tier</option>
+          <option>AC 2 Tier</option>
+          <option>First Class</option>
+        </select>
+      </div>
+      <div>
+        <label for="quota">Quota</label>
+        <select id="quota">
+          <option>General</option>
+          <option>Tatkal</option>
+          <option>Senior Citizen</option>
+          <option>Ladies</option>
+        </select>
+      </div>
+      <div class="options">
+        <label><input type="checkbox"> Person With Disability</label>
+        <label><input type="checkbox"> Flexible Date</label>
+        <label><input type="checkbox"> Train with Available Berth</label>
+      </div>
+      <div class="btns">
+        <button type="submit" class="search-btn">Search</button>
+        <button type="button" class="easy-btn">Easy Booking</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Indian Railways | IRCTC Clone Design
+  </footer>
+</body>
+</html>

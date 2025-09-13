@@ -1,0 +1,36 @@
+console.log("===hour 1: JSON Basics===");
+
+let book1 = {
+    name: "physics",
+    author: "shyam",
+    price: 200
+}
+
+let book2 = {
+    name: "maths",
+    author: "shiva",
+    price:250
+}
+
+let book3={
+    name:"telugu",
+    author:"santhosh",
+    price:100
+}
+ 
+// console.log("book1:",book1);
+// console.log("book2:",book2);
+// console.log("book3:",book3);
+let book1=JSON.stringify(book1);
+console.log("book1:",book1);
+
+let book2=JSON.parse(book2);
+console.log("book2:",book2);
+
+let book3=JSON.parse(book3);
+console.log("book3:",book3);
+
+fetch("http//jsonplaceholder.typicode.com/posts")
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error("Error fetching data:", error));
